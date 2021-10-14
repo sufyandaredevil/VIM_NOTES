@@ -18,3 +18,39 @@ visual modes - used for selecting text
     V - for line selection continued with next motion
     <C-v> (this means pressing [CTRL]+v) - means block selection of text continued with next motion)
 
+----------------------------------------------------------------------------
+NAVIGATION CMDS IN VIM
+----------------------------------------------------------------------------
+
+j - move down
+k - move up
+l - move right
+h - move left
+
+w - move to next word (considers punctuation as a word and whitespace)
+b - move to previous word (considers punctuation as a word and whitespace)
+W - move to next word (doesn't consider punctuation as a word) considering whitespace
+B - move to previous word (doesn't consider punctuation as a word) considering whitespace
+
+0 - jump to the beginning of the line
+$ - jump to the end of the line
+^ - jump to very first character(not a whitespace) in the line
+
+gg - jumps to first line in the file
+G - jumps to last line in the file
+
+:<line_number> - jump to given line_number in the file
+:$ - jump to the end of the file
+
+(<C-any_alphabet> means [CTRL] + any_alphabet, <CR> means [ENTER])
+<C-f> - Page Down
+<C-b> - Page Up
+z<CR> - moves the current cursor's position up on the screen
+
+<C-g> - displays file's name, metadata, status, current & total line, cursor's position in the current file, how far we're down a file(in %), column number where cursor is at
+g<C-g> - displays even more metadata that the above cmd
+
+(following set of commands follow a pattern that's used throughout in vim, i.e. --> :set <cmd>|no<cmd> to enable/disable an option or --> :set <cmd>! to toggle that option on/off. In the following case cmd is 'ruler')
+:set ruler - shows line and column number in lower bottom side of vim(after set few <C-g> info is hidden to avoid metadata redundancy)
+:set noruler - hides line and column number in lower bottom side of vim
+:set ruler! - toggles line and column number in lower bottom side of vim
