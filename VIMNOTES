@@ -6,3 +6,15 @@ VIM - Vi IMproved where Vi means 'Visual'
 the cmd vi has been replaced by vim
 Vim is available in a TUI(Textbased user interface) and a GUI 
 
+----------------------------------------------------------------------------
+MODES IN VIM
+----------------------------------------------------------------------------
+
+normal/command mode (Esc|<C-[>) - normally vim starts in this mode (usually used for entering commands)
+insert mode (i) - mode for inserting text
+commandline/line modes(:,?,/,!) - normally entered when in normal mode that enables to enter cmd like saving, searching, locating, switching options related to vim etc
+visual modes - used for selecting text 
+    v - starts text selection continued with next motion
+    V - for line selection continued with next motion
+    <C-v> (this means pressing [CTRL]+v) - means block selection of text continued with next motion)
+
