@@ -16,7 +16,7 @@ commandline/line modes(:,?,/,!) - normally entered when in normal mode that enab
 visual modes - used for selecting text 
     v - starts text selection continued with next motion
     V - for line selection continued with next motion
-    <C-v> (this means pressing [CTRL]+v) - means block selection of text continued with next motion)
+    <C-v> (NOTE: this means pressing [CTRL]+v) - means block selection of text continued with next motion)
 
 ----------------------------------------------------------------------------
 NAVIGATION CMDS IN VIM
@@ -42,15 +42,38 @@ G - jumps to last line in the file
 :<line_number> - jump to given line_number in the file
 :$ - jump to the end of the file
 
-(<C-any_alphabet> means [CTRL] + any_alphabet, <CR> means [ENTER])
+(NOTE: <C-any_alphabet> means [CTRL] + any_alphabet, <CR> means [ENTER])
 <C-f> - Page Down
 <C-b> - Page Up
 z<CR> - moves the current cursor's position up on the screen
 
-<C-g> - displays file's name, metadata, status, current & total line, cursor's position in the current file, how far we're down a file(in %), column number where cursor is at
-g<C-g> - displays even more metadata that the above cmd
+    |--------(following block to be replaced elsewhere later due to not being navigation cmds)----------------------
+    |  <C-g> - displays file's name, metadata, status, current & total line, cursor's position in the current file, how far we're down a file(in %), column number where cursor is at
+    |  g<C-g> - displays even more metadata that the above cmd
+    |  
+    |  (following set of commands follow a pattern that's used throughout in vim, i.e. --> :set <cmd>|no<cmd> to enable/disable an option or --> :set <cmd>! to toggle that option on/off. In the following case cmd is 'ruler')
+    |  :set ruler - shows line and column number in lower bottom side of vim(after set few <C-g> info is hidden to avoid metadata redundancy)
+    |  :set noruler - hides line and column number in lower bottom side of vim
+    |  :set ruler! - toggles line and column number in lower bottom side of vim
+    |  
+    |  . - repeats previous command
+    |  
+    |  :w - saves the current file
+    |  :wq - write and quit
+    |  :q - quit if no changes are done and if changed, warning is shown
+    |  :q! - quit without write
+    |  NOTE: the symbol ! when used in command/line mode(:) generally means to force an action, toggle setting, execute external cmd etc
+    |---------------------------------------------------------------------------------------------------------------
 
-(following set of commands follow a pattern that's used throughout in vim, i.e. --> :set <cmd>|no<cmd> to enable/disable an option or --> :set <cmd>! to toggle that option on/off. In the following case cmd is 'ruler')
-:set ruler - shows line and column number in lower bottom side of vim(after set few <C-g> info is hidden to avoid metadata redundancy)
-:set noruler - hides line and column number in lower bottom side of vim
-:set ruler! - toggles line and column number in lower bottom side of vim
+----------------------------------------------------------------------------
+TEXT DELETION CMDS IN VIM
+----------------------------------------------------------------------------
+
+x - delete letter present below the cursor
+X - delete letter present before the cursor
+D - deletes texts from current cursor's position to end of the line
+d <motion_cmd> - delete texts from current curosor's position upto given <motion_cmd>
+Eg: dw - deletes a word from the cursor's current position
+<count> dd <motion_cmd> - delete current line and contents where cursor is <count> times upto given motion
+Eg: 5dw - delete 5 words
+NOTE: the above 2 cmds generally means: [count]operation{motion}. Also --> [count]operation[count]{motion} is possible
