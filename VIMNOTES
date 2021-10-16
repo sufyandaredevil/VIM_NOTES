@@ -45,6 +45,10 @@ G - jumps to last line in the file
 (NOTE: <C-any_alphabet> means [CTRL] + any_alphabet, <CR> means [ENTER])
 <C-f> - Page Down
 <C-b> - Page Up
+<C-o> - Move Cursor to previous position, i.e. from where the cursor is jumped from
+<C-i> - Move Cursor to lastly changed position, i.e. to the very last position where cursor was placed
+<C-]> - Move Cursor to the highlighted text's definition below cursor(this only works within vim's :help <command> context or help.txt file). For more view HELP SYSTEM IN VIM Section
+<C-w><C-w> - Switch between files in vim
 z<CR> - moves the current cursor's position up on the screen
 
     |--------(following block to be replaced elsewhere later due to not being navigation cmds)----------------------
@@ -72,8 +76,39 @@ TEXT DELETION CMDS IN VIM
 x - delete letter present below the cursor
 X - delete letter present before the cursor
 D - deletes texts from current cursor's position to end of the line
-d <motion_cmd> - delete texts from current curosor's position upto given <motion_cmd>
+d <motion_cmd> - delete texts from current cursor's position upto given <motion_cmd>
 Eg: dw - deletes a word from the cursor's current position
 <count> dd <motion_cmd> - delete current line and contents where cursor is <count> times upto given motion
 Eg: 5dw - delete 5 words
 NOTE: the above 2 cmds generally means: [count]operation{motion}. Also --> [count]operation[count]{motion} is possible
+
+----------------------------------------------------------------------------
+HELP SYSTEM IN VIM
+----------------------------------------------------------------------------
+
+:help - opens the vim's help.txt(in readonly mode) which is a text file, where if we press <C-g> we can see the location of where the file help.txt is located
+:help <command> - shows info about the <command> given from the help.txt file
+Eg: :help dd
+
+NOTE: when we see infos present within square brackets ([]) always know that they are optional
+i.e. for the above example the description we see will be "Delete [count] lines [into register x] linewise.", where count and into register x are optional to be considered
+We can also get help on other various subjects and this is identified by the color when help.txt is viewed in vim.
+Eg: for the optional subject we saw previously ([count] which is highlighted in purple(color might vary)) can also be viewed in the help as follows:
+:help count
+We can also go to the definition of a highlighted word like count, linewise but keeping the cursor over it and press <C-]>
+
+Other Important Examples:
+    1 - :help :q
+    NOTE: for the above definition we see that from ':q[uit]', 'uit' is placed inside [] brackets which means they are optional to type i.e. :q | :quit, both means the same
+
+    2 - :h Ctrl-f|^f - help description for cmds with CTRL button presses. Here ^ can be used instead of typing 'Ctrl-'
+
+    3 - :help :help
+    NOTE: even for the above definition the words elp from help are optional to type i.e. :help | :h, both means the same
+
+Also when typing :h | :help <cmd>, when we wanna see all different combinations of entered <cmd>(similar to auto suggest) we can type:
+:h :q[PRESS CTRL + d now], which shows all possibilities of q i.e. :q, :quit, :quita, :qa etc., also:
+:h :q[PRESS TAB BUTTON now], which does the same as above but we can select using enterkey from the possibilities shown, and SHIFT + TAB reverses the possibility traversing
+
+Help system is also useful to know alternatives for a known command
+Eg: :f can be used instead of using <C-g> which can be found from the help.txt documentation after we searching using :h ^g
