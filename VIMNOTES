@@ -61,6 +61,8 @@ z<CR> - moves the current cursor's position up on the screen
     |  :set ruler! - toggles line and column number in lower bottom side of vim
     |  
     |  . - repeats previous command
+    |  u - undo previous change
+    |  <C-r> - redo previous change
     |  
     |  :w - saves the current file
     |  :wq - write and quit
@@ -73,12 +75,14 @@ z<CR> - moves the current cursor's position up on the screen
 TEXT DELETION CMDS IN VIM
 ----------------------------------------------------------------------------
 
+NOTE: foll. commands basically cuts and saves deleted content to register. For more see --> CUT COPY PASTE (DELETE,YANK,PUT) IN VIM Section
+
 x - delete letter present below the cursor
 X - delete letter present before the cursor
 D - deletes texts from current cursor's position to end of the line
-d <motion_cmd> - delete texts from current cursor's position upto given <motion_cmd>
+d<motion_cmd> - delete texts from current cursor's position upto given <motion_cmd>
 Eg: dw - deletes a word from the cursor's current position
-<count> dd <motion_cmd> - delete current line and contents where cursor is <count> times upto given motion
+<count>dd<motion_cmd> - delete current line and contents where cursor is <count> times upto given motion
 Eg: 5dw - delete 5 words
 NOTE: the above 2 cmds generally means: [count]operation{motion}. Also --> [count]operation[count]{motion} is possible
 
@@ -87,7 +91,7 @@ HELP SYSTEM IN VIM
 ----------------------------------------------------------------------------
 
 :help - opens the vim's help.txt(in readonly mode) which is a text file, where if we press <C-g> we can see the location of where the file help.txt is located
-:help <command> - shows info about the <command> given from the help.txt file
+:help<command> - shows info about the <command> given from the help.txt file
 Eg: :help dd
 
 NOTE: when we see infos present within square brackets ([]) always know that they are optional
@@ -112,3 +116,46 @@ Also when typing :h | :help <cmd>, when we wanna see all different combinations 
 
 Help system is also useful to know alternatives for a known command
 Eg: :f can be used instead of using <C-g> which can be found from the help.txt documentation after we searching using :h ^g
+
+----------------------------------------------------------------------------
+CUT COPY PASTE (DELETE,YANK,PUT) IN VIM
+----------------------------------------------------------------------------
+
+NOTE: we've seen cmds like d,D,x in TEXT DELETION CMDS, but both actually cut text and not just delete it
+where cut = delete and save into a register (register is a clipboard-like storage location for vim)
+
+D - cut text from cursor till end and place in the UNNAMED/DEFAULT register
+dd - cut line and place in the UNNAMED/DEFAULT register
+x - cut text and place in the UNNAMED/DEFAULT register
+p - put text after the cursor's line
+p - put text before the cursor's line
+y{motion} - yank text wrt given motion
+yy - yanks whole line's content present below cursor
+
+----------------------------------------------------------------------------
+REGISTERS IN VIM
+----------------------------------------------------------------------------
+
+Types of Registers:
+    UNNAMED/DEFAULT = "" (holds text from d,c,s,x,y ops/contains last operated on text)
+    NUMBERED = "0, "1,..., "9 (generally contents in these registers shift with each d or c ops)
+        ("0 holds last text yanked(y))
+        ("1 holds last text deleted(d) or changed(c))
+    NAMED = "a, "b,..., "z (totally controlled by user also "A,..., "Z can also be used but "a & "A mean the same.
+        NOTE: in context to commands when used with capital alphabets contents are appended instead of being replaced or created)
+        Eg: copying something to "a and again copying something would mess up the older content so we can use "A instead of "a that in result appends the content 
+    BLACKHOLE = "_ (usually used when we don't wanna mess up the numbered register's content while performing vim ops)
+
+
+To view specific/all register/s --> :reg [register(s)]
+Eg--> :reg - view all register's contents
+Eg--> :reg 1z - view register 1 and register z's contents
+
+To put/paste content from a register --> "<register_type_specific><put_cmd>
+Eg: "0P - put text from register 0 to the current file
+NOTE: same goes for copying content to a specific type of register.
+Eg: "ayy - yank whole line's content below the cursor to register a
+
+To delete a line without changing the contents in the register --> "_dd
+To execute a command within a register n times --> <number>"<register><command>
+Eg: "h2p | 2"hp - paste(p) content from h register("h) twice(2)
