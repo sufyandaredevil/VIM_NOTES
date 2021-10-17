@@ -91,7 +91,7 @@ HELP SYSTEM IN VIM
 ----------------------------------------------------------------------------
 
 :help - opens the vim's help.txt(in readonly mode) which is a text file, where if we press <C-g> we can see the location of where the file help.txt is located
-:help<command> - shows info about the <command> given from the help.txt file
+:help <command> - shows info about the <command> given from the help.txt file
 Eg: :help dd
 
 NOTE: when we see infos present within square brackets ([]) always know that they are optional
@@ -142,7 +142,7 @@ Types of Registers:
         ("0 holds last text yanked(y))
         ("1 holds last text deleted(d) or changed(c))
     NAMED = "a, "b,..., "z (totally controlled by user also "A,..., "Z can also be used but "a & "A mean the same.
-        NOTE: in context to commands when used with capital alphabets contents are appended instead of being replaced or created)
+        NOTE: in context to commands when used with capital alphabets (i.e. uppercase named register) contents are appended instead of being replaced or created)
         Eg: copying something to "a and again copying something would mess up the older content so we can use "A instead of "a that in result appends the content 
     BLACKHOLE = "_ (usually used when we don't wanna mess up the numbered register's content while performing vim ops)
 
@@ -151,11 +151,49 @@ To view specific/all register/s --> :reg [register(s)]
 Eg--> :reg - view all register's contents
 Eg--> :reg 1z - view register 1 and register z's contents
 
+To delete a line without changing the contents in the register --> "_dd
+
 To put/paste content from a register --> "<register_type_specific><put_cmd>
 Eg: "0P - put text from register 0 to the current file
 NOTE: same goes for copying content to a specific type of register.
 Eg: "ayy - yank whole line's content below the cursor to register a
 
-To delete a line without changing the contents in the register --> "_dd
-To execute a command within a register n times --> <number>"<register><command>
-Eg: "h2p | 2"hp - paste(p) content from h register("h) twice(2)
+To perform repetition with registers --> [count][register]command | [register][count]command
+Eg:  2"hp | "h2p - paste(p) content from h register("h) twice(2)
+
+----------------------------------------------------------------------------
+TEXT TRANSFORMATION IN VIM
+----------------------------------------------------------------------------
+
+i - goto insert mode(i.e. before the cursor)
+I - goto 0th position in current cursor's line and goto insert mode
+a - goto insert mode(i.e. after the cursor)
+A - goto $th position in current cursor's line and goto insert mode
+O - Insert new line below the cursor and enter insert mode
+o - Insert new line above the cursor and enter insert mode
+
+for repetition of text insertion:
+[count] [above_cmds] <your_text_here> <Esc>
+Eg: 5i*<Esc> - places '*' 5 times horizontally
+Eg: 5o*<Esc> - places '*' 5 times vertically
+
+R - replaces text present below the cursor and beyond then stays in replace mode
+r - replace only one text present below the cursor then goes to normal mode automatically
+
+[count]cc - deletes/cuts whole [count] line's content and stays in insert mode
+c<motion_cmd> - deletes/cuts from current cursor's position till given motion and stays in insert mode
+Eg--> cw - change a word and stay in insert mode (alternative to cmd 'dwi' but space present after the word would be removed in this case)
+C - delete/cuts from current cursor's position till end of current line and stays in insert mode
+NOTE: C is an alternative to the cmd 'd$a'
+
+~ - Toggles a single alphabet's case present under the cursor
+g~<motion> - Toggles alphabet's case present under the cursor till given motion
+Eg--> g~w - toggles case of the word present under the cursor
+g~~ - Toggles all alphabets case in the current cursor's line (alternative to g~$)
+gU<motion> - Force toggle alphabets to uppercase under the cursor till given motion
+gUU - Force toggle all alphabets to uppercase present under the cursor's line
+gu<motion> - Force toggle alphabets to lowercase under the cursor till given motion
+guu - Force toggle all alphabets to lowercase present under the cursor's line
+
+[count]J - joins succeeding line to the current cursor's line by adding a space (if not present already) and repeats this [count] times
+[count]gJ - same as above put doesn't include the spacing logic in this one and repeats this [count] times
