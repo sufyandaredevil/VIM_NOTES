@@ -3,7 +3,7 @@ INTRODUCTION TO VIM
 ----------------------------------------------------------------------------
 
 VIM - Vi IMproved where Vi means 'Visual'
-the cmd vi has been replaced by vim
+the cmd vi has been replaced by vim but still both could be used
 Vim is available in a TUI(Textbased user interface) and a GUI 
 
 ----------------------------------------------------------------------------
@@ -116,6 +116,7 @@ Eg: for the optional subject we saw previously ([count] which is highlighted in 
 We can also go to the definition of a highlighted word like count, linewise but keeping the cursor over it and press <C-]>
 
 Other Important Examples:
+
     1 - :help :q
     NOTE: for the above definition we see that from ':q[uit]', 'uit' is placed inside [] brackets which means they are optional to type i.e. :q | :quit, both means the same
 
@@ -164,6 +165,7 @@ Types of Registers:
 To view specific/all register/s --> :reg [register(s)]
 Eg--> :reg - view all register's contents
 Eg--> :reg 1z - view register 1 and register z's contents
+Eg--> :reg " - view default register's content
 
 To delete a line without changing the contents in the register --> "_dd
 
@@ -229,6 +231,11 @@ Eg: if 'Hello world' is the string then:
 To delete from current cursor's position uptill given searched text --> d/<the_text_uptill_you_wanna_delete>
 To yank text from current cursor's position uptill given searched text into a register --> "<register>y/<the_text_uptill_you_wanna_delete>
 
+Options available related to searching:
+:set is! | incsearch! - to toggle incremental search, i.e. constantly places the cursor in the text you search and keep incrementing the placement until you're done typing your search keyword
+:set hls! | hlsearch! - to toggle search highlighting 
+:set nu! | number! - to toggle number line
+
 For Text Substitution:
 :[range]s/{old_text}/{new_text}/[flags] - substitutes old_text to new_text for given range(can be a number n or n,m) wrt given flags
 NOTE: the [flags] 'g' is applied per line when a range is given
@@ -240,13 +247,14 @@ $ - last line in the file
 /<PATTERN-1>/,/<PATTERN-2>/ - <PATTERN-1>, <PATTERN-2> are text that can be given as a scope for substitution
 
 Important Examples:
+
 Eg--> :s/The/A/ - substitute occurence of 'The' to 'A' in the current cursor's line only
 Eg--> :1s/The/A/g - substitute all occurences of 'The' to 'A' in the 1st line only
 Eg--> :1,5s/The/A/g - substitute all occurences of 'The' to 'A' from the 1st to 5th line
 Eg--> :%s/The/A/g - substitute all occurences of 'The' to 'A' from the entire file
 Eg--> :.,$s/The/A/g - substitute all occurences of 'The' to 'A' from the current line to the last line in the file
 Eg--> :/Start/,/End/s/The/A/g - substitute all occurences of 'The' to 'A' only within the given pattern 'Start' to 'End'
-Eg--> :/Start/,$s/The/A/g - substitute all occurences of 'The' to 'A' only from the given pattern 'Start' to the last line in the file
+Eg--> :/Start/,$s/The/A/g - substitute all occurences of 'The' to 'A' from the given pattern 'Start' to the last line in the file
 
 If there are forward slashes within the text itself we need to escape them while substituting
 Eg: if the given text /var/spool has to be replaced with /usr/local we do the following:
@@ -254,7 +262,64 @@ Eg: if the given text /var/spool has to be replaced with /usr/local we do the fo
 Or there's an alternative method where we can change the pattern separator as follows:
 --> :s#/var/spool#/usr/local#
 
-Options available related to searching:
-:set is! | incsearch! - to toggle incremental search, i.e. constantly places the cursor in the text you search and keep incrementing the placement until you're done typing your search keyword
-:set hls! | hlsearch! - to toggle search highlighting 
-:set nu! | number! - to toggle number line
+----------------------------------------------------------------------------
+TEXT OBJECTS IN VIM
+----------------------------------------------------------------------------
+
+NOTE:
+a - includes delimiter / around / a
+i - doesn't includes delimiter / inner
+
+general form of creating a text object cmd:
+[register(s)]{operation}{a|i}{motion|text_object}
+Here operation could be d,c,g,y etc
+text_object could be >,<,{,},[,],",' etc
+motion could be y,w,c etc
+
+aw - a word with the operation performed
+iw - inner word with the operation performed
+Eg--> daw, diw
+
+as - a sentence with the operation performed (.,!,? is the separator)
+is - inner sentence with the operation performed
+Eg--> das, dis
+
+ap - a paragraph with the operation performed(newline is the separator)
+ip - inner paragraph with the operation performed
+Eg--> dap, dip
+
+To illustrate the usage of above cmds consider 'Hello World! how are you?' where we want to delete the word 'Hello'
+if we perform 'dw' by placing the cursor above the first 'l' in 'Hello' we get the output: 'He World! How are you?'
+but in case of 'daw' if we place the cursor anywhere but above the word 'Hello' we get the output: 'World! How are you?'
+which means that Text Objects doesn't consider the place where we place our cursor but we only need to place the cursor with the motion's context i.e. if we are operating a word we need to stay above the word atleast/in case of a bracket within the scope bracket atleast
+
+Important Examples for Text objects (Programming):
+
+Eg: colors = ['red', 'green', 'blue']
+To delete values inside [] and stay in insert mode:
+--> ci[ | ci]
+And to delete the brackets also:
+--> da[ | da]
+NOTE: same goes for <> (angular brackets) i.e. ci< | ci>' & da< | da>
+
+Eg: print(colors)
+To delete the variable within () and stay in insert mode:
+--> ci( | ci) or --> cib | cib
+And to delete the parenthesis also:
+--> da( | da) or --> dab | dab
+NOTE: same goes for {} (curly brackets) i.e. ci{ | ci}' or ciB | ciB & da{ | da} or daB | daB
+
+Eg: NAME = "VIM"
+To delete values within "" and stay in insert mode:
+--> ci"
+And to delete the 2 doubt quotes also:
+--> da"
+NOTE: same goes for ' & ` (single quote & backtick) i.e. ci' | da' & ci` | da`
+
+Eg: <p>This is a <b>new</b> tag </p>
+To delete the content present within the paragraph tag (<p> THESE_ONES </p>) and stay in insert mode:
+--> cit
+And to delete the angular brackets also:
+--> dat
+NOTE: in this example there is a nested tag(<b>new</b>) so to perform text manips. atleast place the cursor at the start of the angular bracket(OVER HERE --><b>new</b>)
+Same goes for nested [],{},"" etc
