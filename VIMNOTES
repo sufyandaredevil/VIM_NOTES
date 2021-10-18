@@ -14,9 +14,9 @@ normal/command mode (Esc|<C-[>) - normally vim starts in this mode (usually used
 insert mode (i) - mode for inserting text
 commandline/line modes(:,?,/,!) - normally entered when in normal mode that enables to enter cmd like saving, searching, locating, switching options related to vim etc
 visual modes - used for selecting text 
-    v - starts text selection continued with next motion
-    V - for line selection continued with next motion
-    <C-v> (NOTE: this means pressing [CTRL]+v) - means block selection of text continued with next motion)
+    v{motion} - starts text selection continued with next motion
+    V{motion} - for line selection continued with next motion
+    <C-v>{motion} (NOTE: <C-v> means pressing [CTRL] + v) - means block selection of text continued with next motion)
 
 ----------------------------------------------------------------------------
 NAVIGATION CMDS IN VIM
@@ -55,10 +55,11 @@ z<CR> - moves the current cursor's position up on the screen
     |  <C-g> - displays file's name, metadata, status, current & total line, cursor's position in the current file, how far we're down a file(in %), column number where cursor is at
     |  g<C-g> - displays even more metadata that the above cmd
     |  
-    |  (following set of commands follow a pattern that's used throughout in vim, i.e. --> :set <cmd>|no<cmd> to enable/disable an option or --> :set <cmd>! to toggle that option on/off. In the following case cmd is 'ruler')
+    |  (following set of commands follow a pattern that's used throughout in vim, i.e. --> :set <cmd>|no<cmd> to enable/disable an option or --> :set <cmd>! to toggle that option on/off and :set <cmd>? to check whether cmd set/not In the following case cmd is 'ruler')
     |  :set ruler - shows line and column number in lower bottom side of vim(after set few <C-g> info is hidden to avoid metadata redundancy)
     |  :set noruler - hides line and column number in lower bottom side of vim
     |  :set ruler! - toggles line and column number in lower bottom side of vim
+    |  :set ruler? - shows whether the ruler is set/not i.e. outputs ruler/noruler if set/reset
     |  
     |  . - repeats previous command
     |  u - undo previous change
@@ -69,6 +70,19 @@ z<CR> - moves the current cursor's position up on the screen
     |  :q - quit if no changes are done and if changed, warning is shown
     |  :q! - quit without write
     |  NOTE: the symbol ! when used in command/line mode(:) generally means to force an action, toggle setting, execute external cmd etc
+    |  
+    |  i - goto insert mode(i.e. before the cursor)
+    |  I - goto 0th position in current cursor's line and goto insert mode
+    |  a - goto insert mode(i.e. after the cursor)
+    |  A - goto $th position in current cursor's line and goto insert mode
+    |  O - Insert new line below the cursor and enter insert mode
+    |  o - Insert new line above the cursor and enter insert mode
+    |  for repetition of text insertion:
+    |  
+    |  [count] [above_cmds] <your_text_here> <Esc>
+    |  Eg: 5i*<Esc> - places '*' 5 times horizontally
+    |  Eg: 5o*<Esc> - places '*' 5 times vertically
+    |  
     |---------------------------------------------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------
@@ -127,8 +141,8 @@ where cut = delete and save into a register (register is a clipboard-like storag
 D - cut text from cursor till end and place in the UNNAMED/DEFAULT register
 dd - cut line and place in the UNNAMED/DEFAULT register
 x - cut text and place in the UNNAMED/DEFAULT register
-p - put text after the cursor's line
-p - put text before the cursor's line
+P - put text before the cursor
+p - put text after the cursor
 y{motion} - yank text wrt given motion
 yy - yanks whole line's content present below cursor
 
@@ -165,18 +179,6 @@ Eg:  2"hp | "h2p - paste(p) content from h register("h) twice(2)
 TEXT TRANSFORMATION IN VIM
 ----------------------------------------------------------------------------
 
-i - goto insert mode(i.e. before the cursor)
-I - goto 0th position in current cursor's line and goto insert mode
-a - goto insert mode(i.e. after the cursor)
-A - goto $th position in current cursor's line and goto insert mode
-O - Insert new line below the cursor and enter insert mode
-o - Insert new line above the cursor and enter insert mode
-
-for repetition of text insertion:
-[count] [above_cmds] <your_text_here> <Esc>
-Eg: 5i*<Esc> - places '*' 5 times horizontally
-Eg: 5o*<Esc> - places '*' 5 times vertically
-
 R - replaces text present below the cursor and beyond then stays in replace mode
 r - replace only one text present below the cursor then goes to normal mode automatically
 
@@ -197,3 +199,62 @@ guu - Force toggle all alphabets to lowercase present under the cursor's line
 
 [count]J - joins succeeding line to the current cursor's line by adding a space (if not present already) and repeats this [count] times
 [count]gJ - same as above put doesn't include the spacing logic in this one and repeats this [count] times
+
+----------------------------------------------------------------------------
+SEARCH/FIND,REPLACE/SUBSTITUTION IN VIM
+----------------------------------------------------------------------------
+
+f<character_you're_searching_for> - forward search in cursor's line and places the cursor on the character you searched for
+F<character_you're_searching_for> - backward search in cursor's line and places the cursor on the character you searched for
+t<character_you're_searching_for> - forward search in cursor's line and places the cursor before the character you searched for
+T<character_you're_searching_for> - backward search in cursor's line and places the cursor after the character you searched for
+    ; - forward cycle(for f,t)/backward cycle(for F,T) through found searches
+    , - backward cycle(for f,t)/forward cycle(for F,T) through found searches
+
+NOTE: [count] could also be mentioned with f,F,t,T. Eg --> 2f<character_you're_searching_for> - goto 2nd search result of the character you searched for
+
+To delete from current cursor's position uptill given searched text in the same line --> dt<the_character_uptill_you_wanna_delete>
+To delete from current cursor's position upto given searched text in the same line --> df<the_character_upto_you_wanna_delete>
+Eg: if 'Hello world' is the string then:
+    'dtw' deletes 'Hello '
+    'dfw' deletes 'Hello w'
+
+/<text_you're_searching_for> - forward search whole file
+?<text_you're_searching_for> - backward search whole file
+* - forward search for the next occurence of the entire word only that's under the cursor
+# - backward search for the previous occurence of the entire word only that's under the cursor
+    n - forward cycle(for /,*)/backward cycle(for ?,#) through found searches
+    N - backward cycle(for /,*)/forward cycle(for ?,#) through found searches
+
+To delete from current cursor's position uptill given searched text --> d/<the_text_uptill_you_wanna_delete>
+To yank text from current cursor's position uptill given searched text into a register --> "<register>y/<the_text_uptill_you_wanna_delete>
+
+For Text Substitution:
+:[range]s/{old_text}/{new_text}/[flags] - substitutes old_text to new_text for given range(can be a number n or n,m) wrt given flags
+NOTE: the [flags] 'g' is applied per line when a range is given
+
+special [range]s could be as follows:
+. - current line
+$ - last line in the file
+% - All lines (entire file, i.e. alternative to 1,$)
+/<PATTERN-1>/,/<PATTERN-2>/ - <PATTERN-1>, <PATTERN-2> are text that can be given as a scope for substitution
+
+Important Examples:
+Eg--> :s/The/A/ - substitute occurence of 'The' to 'A' in the current cursor's line only
+Eg--> :1s/The/A/g - substitute all occurences of 'The' to 'A' in the 1st line only
+Eg--> :1,5s/The/A/g - substitute all occurences of 'The' to 'A' from the 1st to 5th line
+Eg--> :%s/The/A/g - substitute all occurences of 'The' to 'A' from the entire file
+Eg--> :.,$s/The/A/g - substitute all occurences of 'The' to 'A' from the current line to the last line in the file
+Eg--> :/Start/,/End/s/The/A/g - substitute all occurences of 'The' to 'A' only within the given pattern 'Start' to 'End'
+Eg--> :/Start/,$s/The/A/g - substitute all occurences of 'The' to 'A' only from the given pattern 'Start' to the last line in the file
+
+If there are forward slashes within the text itself we need to escape them while substituting
+Eg: if the given text /var/spool has to be replaced with /usr/local we do the following:
+--> :s/\/var\/spool/\/usr\/local/
+Or there's an alternative method where we can change the pattern separator as follows:
+--> :s#/var/spool#/usr/local#
+
+Options available related to searching:
+:set is! | incsearch! - to toggle incremental search, i.e. constantly places the cursor in the text you search and keep incrementing the placement until you're done typing your search keyword
+:set hls! | hlsearch! - to toggle search highlighting 
+:set nu! | number! - to toggle number line
