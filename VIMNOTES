@@ -323,3 +323,29 @@ And to delete the angular brackets also:
 --> dat
 NOTE: in this example there is a nested tag(<b>new</b>) so to perform text manips. atleast place the cursor at the start of the angular bracket(OVER HERE --><b>new</b>)
 Same goes for nested [],{},"" etc
+
+----------------------------------------------------------------------------
+MACROS IN VIM
+----------------------------------------------------------------------------
+
+q{register}<all_your_cmds> - to start recording and store the vim routine/macro in a register
+q - to stop recording and vim routine/macro'll be saved in the particular register you mentioned while starting the recording 
+[count]@{register} - replay the recorded macro from the register [count] times
+:[range(s)] normal @{register} - replay the recorded macro from the register for the given range only. For more about ranges view Text Substitution in SEARCH/FIND,REPLACE/SUBSTITUTION IN VIM Section
+[count]@@ - repeat most recently executed macro [count] times
+
+NOTE: use the capital alphabets to append macros if missed while recording at start
+
+Macro Best Practices:
+    Normalize the cursor position (0)
+    Perform edits & ops
+    Position your cursor to enable easy replays (j)
+
+Saving Macros:
+.viminfo(linux,MAC) / _viminfo(windows) present in ~ dir.
+.vimrc(linux,MAC) / _vimrc(windows) present in ~ dir. (File that contains initialization commands)
+
+To create macros in vimrc file:
+let @<register_name> = '<key_strokes>'
+Eg-->let @<register_name> = 'ITODO: ^[j'
+NOTE: to create the <Esc> we need to create a literal i.e. press [CTRL] + v in normal mode that creates ^ as a literal and then press [ESC]
