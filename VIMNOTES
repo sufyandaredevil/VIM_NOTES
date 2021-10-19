@@ -13,10 +13,6 @@ MODES IN VIM
 normal/command mode (Esc|<C-[>) - normally vim starts in this mode (usually used for entering commands)
 insert mode (i) - mode for inserting text
 commandline/line modes(:,?,/,!) - normally entered when in normal mode that enables to enter cmd like saving, searching, locating, switching options related to vim etc
-visual modes - used for selecting text 
-    v{motion} - starts text selection continued with next motion
-    V{motion} - for line selection continued with next motion
-    <C-v>{motion} (NOTE: <C-v> means pressing [CTRL] + v) - means block selection of text continued with next motion)
 
 ----------------------------------------------------------------------------
 NAVIGATION CMDS IN VIM
@@ -47,7 +43,7 @@ G - jumps to last line in the file
 <C-b> - Page Up
 <C-o> - Move Cursor to previous position, i.e. from where the cursor is jumped from
 <C-i> - Move Cursor to lastly changed position, i.e. to the very last position where cursor was placed
-<C-]> - Move Cursor to the highlighted text's definition below cursor(this only works within vim's :help <command> context or help.txt file). For more view HELP SYSTEM IN VIM Section
+<C-]> - Move Cursor to the highlighted text's definition below cursor(this only works within vim's :help <command> context or help.txt file of vim. Alternatively for programming, to view function definition we can use this and even 'gd' cmd). For more view HELP SYSTEM IN VIM Section
 <C-w><C-w> - Switch between files in vim
 z<CR> - moves the current cursor's position up on the screen
 
@@ -55,12 +51,19 @@ z<CR> - moves the current cursor's position up on the screen
     |  <C-g> - displays file's name, metadata, status, current & total line, cursor's position in the current file, how far we're down a file(in %), column number where cursor is at
     |  g<C-g> - displays even more metadata that the above cmd
     |  
-    |  (following set of commands follow a pattern that's used throughout in vim, i.e. --> :set <cmd>|no<cmd> to enable/disable an option or --> :set <cmd>! to toggle that option on/off and :set <cmd>? to check whether cmd set/not In the following case cmd is 'ruler')
+    |  (following set of commands follow a pattern that's used throughout in vim, i.e. --> :set <cmd>|no<cmd> to enable/disable an option or --> :set <cmd>! to toggle that option on/off, :set <cmd>? to check whether cmd set/not and :set <cmd1>[=val1],...,<cmd2>[=val2] for setting multiple options. In the following case cmd is 'ruler')
     |  :set ruler - shows line and column number in lower bottom side of vim(after set few <C-g> info is hidden to avoid metadata redundancy)
     |  :set noruler - hides line and column number in lower bottom side of vim
     |  :set ruler! - toggles line and column number in lower bottom side of vim
     |  :set ruler? - shows whether the ruler is set/not i.e. outputs ruler/noruler if set/reset
     |  
+    |  :set shiftwidth=<number> - sets the number of space indents when pressing >>|<< (default=8)
+    |  :set tabstop=<number> - sets the number of tab indents when pressing tab (default=8)
+    |  [NOT SURE ABOUT THIS OPTION's USAGE] :set expandtab! - toggle inserting spaces instead of tabs when pressing the tab button
+    |  :set list! - toggle whitespace characters(space,tabs,newline) to be visible with the help of a literal (highlighted blue in vim)
+    |  
+    |  >> - indent(4 spaces)
+    |  << - deindent(4 spaces)
     |  . - repeats previous command
     |  u - undo previous change
     |  <C-r> - redo previous change
@@ -77,8 +80,8 @@ z<CR> - moves the current cursor's position up on the screen
     |  A - goto $th position in current cursor's line and goto insert mode
     |  O - Insert new line below the cursor and enter insert mode
     |  o - Insert new line above the cursor and enter insert mode
-    |  for repetition of text insertion:
     |  
+    |  for repetition of text insertion:
     |  [count] [above_cmds] <your_text_here> <Esc>
     |  Eg: 5i*<Esc> - places '*' 5 times horizontally
     |  Eg: 5o*<Esc> - places '*' 5 times vertically
@@ -349,3 +352,35 @@ To create macros in vimrc file:
 let @<register_name> = '<key_strokes>'
 Eg-->let @<register_name> = 'ITODO: ^[j'
 NOTE: to create the <Esc> we need to create a literal i.e. press [CTRL] + v in normal mode that creates ^ as a literal and then press [ESC]
+
+----------------------------------------------------------------------------
+VISUAL MODE CMDS IN VIM
+----------------------------------------------------------------------------
+
+visual mode is used for selecting text
+v{motion} - starts text selection continued with next motion
+V{motion} - for line selection continued with next motion
+<C-v>{motion} - means block selection of text continued with next motion)
+
+gv - reselect the recently visualised text(used when you're in line A select text and deny selecting and then goto line B and thinking of selecting line A's content at ease, this can be used)
+o - To switch between start and end point of selection (this cmd should be used when in visual mode and is mostly used when we forget to select a text before our start point of selection and to switch back to the end point of selection by again pressing it
+O - Same as above but switches horizontally only for <C-v>
+
+NOTE: mostly we can create an optimised vim cmd combination without visual mode cmds itself but to be sure on what text we're operating on could be better
+With visual line mode(V) when appending multiple text only 'A' works and not the 'a' cmd
+With visual block mode(<C-v>) when inserting multiple text only 'I' works and not the 'i' cmd
+With visual block mode(<C-v>) when replacing/changing multiple text only 'c' works and for 'd' only the first selected text will be changed/replaced
+
+After selecting a set of text and if we press ':' we get a symbol: '<,'>
+after the symbol we can start typing substitution cmds as follows:
+:'<,'>s/The/A/g - Replace all occurences of 'The' to 'A' within the selected scope of text
+:'<,'>{center|ce}<center_within_how_many_lines> - center align the selected text within given number as limit
+:'<,'>{left|le}<how far to go from the left> - left align the selected text within given number as limit
+:'<,'>{right|ri}<how far to go from the right> - right align the selected text within given number as limit
+
+Other Important Examples:
+
+v{motion}U|u|~ - change/toggle selected text alphabets to uppercase|lowercase|opposite case
+v/<the_text_upto_you_wanna_delete>d - select & delete text from current cursor's position to the_character_upto_you_wanna_delete
+viw | vaw - select inner word| select all current word with delimiter(space)
+vip | vap - select inner paragraph| select all current paragraph with delimiter(newline)
