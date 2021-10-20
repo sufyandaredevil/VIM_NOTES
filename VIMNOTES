@@ -1,3 +1,4 @@
+" vim: set ft=py :
 ----------------------------------------------------------------------------
 INTRODUCTION TO VIM
 ----------------------------------------------------------------------------
@@ -51,23 +52,13 @@ z<CR> - moves the current cursor's position up on the screen
     |  <C-g> - displays file's name, metadata, status, current & total line, cursor's position in the current file, how far we're down a file(in %), column number where cursor is at
     |  g<C-g> - displays even more metadata that the above cmd
     |  
-    |  (following set of commands follow a pattern that's used throughout in vim, i.e. --> :set <cmd>|no<cmd> to enable/disable an option or --> :set <cmd>! to toggle that option on/off, :set <cmd>? to check whether cmd set/not and :set <cmd1>[=val1],...,<cmd2>[=val2] for setting multiple options. In the following case cmd is 'ruler')
-    |  :set ruler - shows line and column number in lower bottom side of vim(after set few <C-g> info is hidden to avoid metadata redundancy)
-    |  :set noruler - hides line and column number in lower bottom side of vim
-    |  :set ruler! - toggles line and column number in lower bottom side of vim
-    |  :set ruler? - shows whether the ruler is set/not i.e. outputs ruler/noruler if set/reset
-    |  
-    |  :set shiftwidth=<number> - sets the number of space indents when pressing >>|<< (default=8)
-    |  :set tabstop=<number> - sets the number of tab indents when pressing tab (default=8)
-    |  [NOT SURE ABOUT THIS OPTION's USAGE] :set expandtab! - toggle inserting spaces instead of tabs when pressing the tab button
-    |  :set list! - toggle whitespace characters(space,tabs,newline) to be visible with the help of a literal (highlighted blue in vim)
-    |  
-    |  >> - indent(4 spaces)
-    |  << - deindent(4 spaces)
+    |  >> - indent text
+    |  << - deindent text
     |  . - repeats previous command
     |  u - undo previous change
     |  <C-r> - redo previous change
     |  
+    |  :e <path|file_name>- creates a new file in relative path by default
     |  :w - saves the current file
     |  :wq - write and quit
     |  :q - quit if no changes are done and if changed, warning is shown
@@ -234,11 +225,6 @@ Eg: if 'Hello world' is the string then:
 To delete from current cursor's position uptill given searched text --> d/<the_text_uptill_you_wanna_delete>
 To yank text from current cursor's position uptill given searched text into a register --> "<register>y/<the_text_uptill_you_wanna_delete>
 
-Options available related to searching:
-:set is! | incsearch! - to toggle incremental search, i.e. constantly places the cursor in the text you search and keep incrementing the placement until you're done typing your search keyword
-:set hls! | hlsearch! - to toggle search highlighting 
-:set nu! | number! - to toggle number line
-
 For Text Substitution:
 :[range]s/{old_text}/{new_text}/[flags] - substitutes old_text to new_text for given range(can be a number n or n,m) wrt given flags
 NOTE: the [flags] 'g' is applied per line when a range is given
@@ -344,10 +330,6 @@ Macro Best Practices:
     Perform edits & ops
     Position your cursor to enable easy replays (j)
 
-Saving Macros:
-.viminfo(linux,MAC) / _viminfo(windows) present in ~ dir.
-.vimrc(linux,MAC) / _vimrc(windows) present in ~ dir. (File that contains initialization commands)
-
 To create macros in vimrc file:
 let @<register_name> = '<key_strokes>'
 Eg-->let @<register_name> = 'ITODO: ^[j'
@@ -384,3 +366,105 @@ v{motion}U|u|~ - change/toggle selected text alphabets to uppercase|lowercase|op
 v/<the_text_upto_you_wanna_delete>d - select & delete text from current cursor's position to the_character_upto_you_wanna_delete
 viw | vaw - select inner word| select all current word with delimiter(space)
 vip | vap - select inner paragraph| select all current paragraph with delimiter(newline)
+
+----------------------------------------------------------------------------
+VIMRC CONFIGS IN VIM
+----------------------------------------------------------------------------
+
+:version - shows version and info about where system & user vimrc file location
+
+General Pattern of set commands in vim application:
+:set <cmd>|no<cmd> - to enable/disable an option
+:set <cmd>! - to toggle that option on/off
+:set <cmd>? - to check whether cmd set/not, if <cmd> is set output is <cmd> else no<cmd>
+:set <cmd1>[=val1],...,<cmd2>[=val2] - for setting multiple options
+:set <cmd1>& - for setting an option value back to its default
+:set - shows all the options that are set other that the defaults are displayed
+
+Basics of :set command:
+To view possible values to set for an option we can use the :h or the :help option to view an option's specifics
+Eg: ':h hls' shows 'boolean (default off)' which says that the value is either true or false which can be toggle or set using the :set hls | :set hls!
+if we want to reset it we can use :set nohls or toggle off with ! and check whether the change has taken place using : set hls?
+NOTE: For any command try searching for all possibilities i.e. for example in case of 'history' cmd there are different ones, as follows:
+:h :history 
+:h 'history'(goto option documentation which we need in this case)
+:h history
+So try searching correctly for the one you're in need of
+
+Now lets create a new vimrc file in ~/.vimrc (for linux, MAC) | $HOME/_vimrc (for windows) using the :e <vimrc_config_file_path> cmdline cmd | :mkvimrc [vimrc_config_file_path]
+NOTE: the following .vimrc|_vimrc mockup contains description about some commands through comments(starting with ")
+
+(.vimrc | _vimrc)____________________________________________________________________________________________________________________________________________________
+| 
+| "shows a menu when using tab completion
+| set wildmenu
+| 
+| set ignorecase
+| set smartcase
+| 
+| "set backup
+| set backup
+| "set bex=SOMETHING
+| 
+| "set color scheme
+| "to see available color schemes use --> :color <TAB>
+| color slate
+| 
+| "to download custom color scheme from internet, we can place it in:
+| " $HOME/vimfiles/colors
+| " ~/.vim/colors
+| 
+| "map KEY to a set of KEYSTROKES:
+| map <F2> iSufyan<CR>CS Major<CR><ESC>
+| "the above mapping says, when pressing F2 we get into insertmode(i) type Sufyan, insert newline(<CR>) repeat typing and going to normal mode(<ESC>)
+| 
+| "map KEY to a set of KEYSTROKES without overwriting the vim defaults:
+| map <leader>w :w!<CR>
+| "the above mapping says, when pressing backward slash(\ = <leader> (\ is default)) then press w it executes the :w!<CR> without overwriting the w 'cmd' that moves forward by a word
+| 
+| "to change the <leader> key:
+| "let mapleader="<ANY_KEY>"
+| 
+| "All other keystroke maps:
+| "<BS> - Backspace
+| "<CR> | <Enter> | <Return> - Enter
+| "<Esc> - Escape
+| "<Space> - Space
+| "<Up> - Up arrow
+| "<Down> - Down arrow
+| "<Left> - Left arrow
+| "<Right> - Right arrow
+| "<Insert> - Insert
+| "<Del> - Delete
+| "<Home> - Home
+| "<End> - End
+| "<PageUp> - Page-Up
+| "<PageDown> - Page-Down
+| "<Tab> - Tab
+| "<bar> - '|'
+| "<C-X> - Ctrl-X
+| "<F1> - <F12> - Function keys
+| 
+| "NOTE: vmap - maps for visual mode only
+| "nmap - maps for normal mode only
+| "vnoremap - disables recursive key maps for visual mode only
+| "nnoremap - disables recursive key maps for normal mode only
+|___________________________________________________________________________________________________________________________________________________________
+
+to set and execute/run the configs from vimrc file during the editing of vimrc and runtime of vim itself without restarting the application
+--> :source <vimrc_config_file_path>
+
+Other Examples of Options that can be set in vim | vimrc file:
+:set ruler - shows line and column number in lower bottom side of vim(after set few <C-g> info is hidden to avoid metadata redundancy)
+:set shiftwidth=<number> - sets the number of space indents when pressing >>|<< (default=8)
+:set tabstop=<number> - sets the number of tab indents when pressing tab (default=8)
+[NOT SURE ABOUT THIS OPTION's USAGE/DEFINITION] :set expandtab! - toggle inserting spaces instead of tabs when pressing the tab button
+:set list! - toggle whitespace characters(space,tabs,newline) to be visible with the help of a literal (highlighted blue in vim)
+:set is! | incsearch! - to toggle incremental search, i.e. constantly places the cursor in the text you search and keep incrementing the placement until you're done typing your search keyword
+:set hls! | hlsearch! - to toggle search highlighting 
+:set nu! | number! - to toggle number line
+
+Also to view all options available in vim
+--> :h option-list
+To view all options with brief description of them in vim
+--> :options
