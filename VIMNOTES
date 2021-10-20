@@ -455,6 +455,7 @@ to set and execute/run the configs from vimrc file during the editing of vimrc a
 --> :source <vimrc_config_file_path>
 
 Other Examples of Options that can be set in vim | vimrc file:
+
 :set ruler - shows line and column number in lower bottom side of vim(after set few <C-g> info is hidden to avoid metadata redundancy)
 :set shiftwidth=<number> - sets the number of space indents when pressing >>|<< (default=8)
 :set tabstop=<number> - sets the number of tab indents when pressing tab (default=8)
@@ -468,3 +469,38 @@ Also to view all options available in vim
 --> :h option-list
 To view all options with brief description of them in vim
 --> :options
+
+----------------------------------------------------------------------------
+VIM GUI(GVIM & MACVIM)
+----------------------------------------------------------------------------
+
+With GUI version we have access to system clipboard
+There are other 2 different types of registers in vim GUI:
+
+"+ - (for linux, MAC, Windows) System clipboard register
+    when pressing [CTRL]|[CMD] + c in an another application the text is copied to this register
+    On pressing "+P it pastes the clipboard's content in vim GUI and places cursor at the end character of copied text
+    On pressing "+gP it pastes the clipboard's content in vim GUI and places cursor after end character of copied text
+
+"* - (for MAC, Windows) Same as "+
+    (for Linux) Contains text that is highlighted/text selected by mouse in an another application and pasted using middle click
+
+Also we can yank or copy text present in vim to system's clipboard using --> "+yy
+
+To set system clipboard as the unnamed register i.e. make vim GUI act morelike other applications by using the sys. clipboard
+(for MAC, Windows) -->:set clipboard=unnamed 
+(for Linux) --> :set clipboard=unnamed+ 
+
+We do have a config specific for vim like vimrc:
+.gvimrc (for MAC, Linux) | _gvimrc (for Windows)
+NOTE: This file is read by vim GUI at start only after reading the vimrc file
+Also :version could be used to find the location of this file
+
+To set a different font in vim GUI:
+:set gfn=*[PRESS ENTER NOW]
+select the font and then apply
+To view the config cmd used to set it later in vimrc use --> :set gfn?
+NOTE: if fontname has spaces in it make sure to escape then when setting them in cmdline of vim
+
+For More on GUI specifics:
+:h gui
