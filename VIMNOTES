@@ -1,4 +1,3 @@
-" vim: set ft=py :
 ----------------------------------------------------------------------------
 INTRODUCTION TO VIM
 ----------------------------------------------------------------------------
@@ -101,6 +100,7 @@ HELP SYSTEM IN VIM
 :help - opens the vim's help.txt(in readonly mode) which is a text file, where if we press <C-g> we can see the location of where the file help.txt is located
 :help <command> - shows info about the <command> given from the help.txt file
 Eg: :help dd
+We can exit the help.txt just like we exit other files using the :q cmd
 
 NOTE: when we see infos present within square brackets ([]) always know that they are optional
 i.e. for the above example the description we see will be "Delete [count] lines [into register x] linewise.", where count and into register x are optional to be considered
@@ -364,6 +364,7 @@ Other Important Examples:
 
 v{motion}U|u|~ - change/toggle selected text alphabets to uppercase|lowercase|opposite case
 v/<the_text_upto_you_wanna_delete>d - select & delete text from current cursor's position to the_character_upto_you_wanna_delete
+vi' | va' - select text present within ' | select text present within and along with '
 viw | vaw - select inner word| select all current word with delimiter(space)
 vip | vap - select inner paragraph| select all current paragraph with delimiter(newline)
 
@@ -504,3 +505,33 @@ NOTE: if fontname has spaces in it make sure to escape then when setting them in
 
 For More on GUI specifics:
 :h gui
+
+----------------------------------------------------------------------------
+BUFFERS IN VIM
+----------------------------------------------------------------------------
+
+Buffers are generally something that is stored temporarily in memory and in context to vim files that are temporarily opened and stored and saved in memory
+In vim when we generally open multiple files we see one at the foreground by at the back there might be multiple files running with the help of the buffer
+
+To open multiple files with vim --> vim <file_name_1>,...<file_name_n>|<file_name(s)_with_regex
+
+To view all buffers/opened files in vim --> :buffers | :ls
+
+Buffer jump commands:
+Specific jumps --> :buffer <file_name|buffer_number>|:b<file_name|buffer_number> (buffer_number|file_name can be found from the :buffers command | :b <your_least_text_here>[PRESS TAB NOW] to view all possibilities)
+To move to next & previous buffer --> :bnext|:bn && :bprevious|:bp (cycles to start/end after reaching the end/start)
+To move to buffer 1 & buffer last --> :bf & :bl
+<C-^> - shift back and forth between current opened and previously opened buffers (the way we know where we jump alternatively is with the help of %a(active & loaded in memory) and # shown in :b cmd where %a means the current file and # which was opened previously when pressing <C-^> cmd)
+NOTE: also :b# | :b%a can be used to switch between buffers
+Also the + sign is shown in the :b table after a change has been done to the buffer and not saved, so we need to save changes before going to the next buffer if we haven't enable the :set hidden option or we can use the force(!) operator when jumping i.e. :b<jump_to_ref>!
+
+global substitution in all opened buffers --> :bufdo %s/#/a/g | w (change '#' to 'a' in all opened buffers) and write the changes
+NOTE: | operator from the above cmd is the command separator that lets vim execute one command after another. In the above case its write after substitution
+
+Add new buffer --> :badd
+Delete current buffer --> :bd
+
+:wall - write all file changes that are changed
+:set hidden - make a file hidden when a change is made and not saved when jumping to annother cmd
+:e <file_name(s> - open file(s)
+:E - open explorer (execute commands just like normal vim)
