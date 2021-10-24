@@ -23,14 +23,20 @@ k - move up
 l - move right
 h - move left
 
-w - move to next word (considers punctuation as a word and whitespace)
-b - move to previous word (considers punctuation as a word and whitespace)
+w - move to next word's start position (considers punctuation as a word and whitespace)
+e - move to next word's end position (considers punctuation as a word and whitespace)
+b - move to previous word's start position (considers punctuation as a word and whitespace)
+ge - move to previous word's end position (considers punctuation as a word and whitespace)
 W - move to next word (doesn't consider punctuation as a word) considering whitespace
-B - move to previous word (doesn't consider punctuation as a word) considering whitespace
+E - move to next word's end position (doesn't consider punctuation as a word)
+B - move to previous word's start position (doesn't consider punctuation as a word) considering whitespace
+gE - move to previous word's end position (doesn't consider punctuation as a w_ord) considering whitespace
 
 0 - jump to the beginning of the line
 $ - jump to the end of the line
 ^ - jump to very first character(not a whitespace) in the line
++ - jump to very first nonblank character of next line
+- - jump to very first nonblank character of previous line
 
 gg - jumps to first line in the file
 G - jumps to last line in the file
@@ -41,6 +47,8 @@ G - jumps to last line in the file
 (NOTE: <C-any_alphabet> means [CTRL] + any_alphabet, <CR> means [ENTER])
 <C-f> - Page Down
 <C-b> - Page Up
+<C-e> - Show one more line at the bottom
+<C-y> - Show one more line at the top
 <C-o> - Move Cursor to previous position, i.e. from where the cursor is jumped from
 <C-i> - Move Cursor to lastly changed position, i.e. to the very last position where cursor was placed
 <C-]> - Move Cursor to the highlighted text's definition below cursor(this only works within vim's :help <command> context or help.txt file of vim. Alternatively for programming, to view function definition we can use this and even 'gd' cmd). For more view HELP SYSTEM IN VIM Section
@@ -177,11 +185,10 @@ TEXT TRANSFORMATION IN VIM
 R - replaces text present below the cursor and beyond then stays in replace mode
 r - replace only one text present below the cursor then goes to normal mode automatically
 
-[count]cc - deletes/cuts whole [count] line's content and stays in insert mode
+[count]cc|S - deletes/cuts whole [count] line's content preserving indentation(if any) and stays in insert mode
 c<motion_cmd> - deletes/cuts from current cursor's position till given motion and stays in insert mode
-Eg--> cw - change a word and stay in insert mode (alternative to cmd 'dwi' but space present after the word would be removed in this case)
-C - delete/cuts from current cursor's position till end of current line and stays in insert mode
-NOTE: C is an alternative to the cmd 'd$a'
+C - delete/cuts from current cursor's position till end of current line and stays in insert mode(alternative to the cmd 'd$a')
+s - delete letter present below the cursor and stays in insert mode
 
 ~ - Toggles a single alphabet's case present under the cursor
 g~<motion> - Toggles alphabet's case present under the cursor till given motion
@@ -226,9 +233,14 @@ To yank text from current cursor's position uptill given searched text into a re
 
 For Text Substitution:
 :[range]s/{old_text}/{new_text}/[flags] - substitutes old_text to new_text for given range(can be a number n or n,m) wrt given flags
-NOTE: the [flags] 'g' is applied per line when a range is given
 
-special [range]s could be as follows:
+[flags] could be as follows:
+g - replace all occurrences of old_text in the line (without g - only first)
+i - ignore case of given old_text
+I - considers case of given old_text
+NOTE: the [flags] is applied per line when a range is given
+
+[range]s could be as follows:
 . - current line
 $ - last line in the file
 % - All lines (entire file, i.e. alternative to 1,$)
@@ -449,8 +461,7 @@ NOTE: the following .vimrc|_vimrc mockup contains description about some command
 | "nmap - maps for normal mode only
 | "vnoremap - disables recursive key maps for visual mode only
 | "nnoremap - disables recursive key maps for normal mode only
-|___________________________________________________________________________________________________________________________________________________________
-
+|____________________________________________________________________________________________________________________________________________________________________
 to set and execute/run the configs from vimrc file during the editing of vimrc and runtime of vim itself without restarting the application
 --> :source <vimrc_config_file_path>
 
@@ -544,7 +555,7 @@ WINDOWS IN VIM
 :on | :only - Close all windows expect the cursor placed window:
 
 Buffer specifics to windows:
-:ba - open all buffers in a window
+:ba - open all buffers in a split window
 :windo %s/#/@g - substitution performed in active windows
 
 To move cursor to specific window:
@@ -562,4 +573,4 @@ Resizing windows commands:
 Moving window commands:
 <C-w>r - rearrange windows by rotating clockwise
 <C-w>R - rearrange windows by rotating anti-clockwise
-<C-w><J|K|H|L> - to move the current cursor's window to the very bottom|top|left|right of the scrren using the full height|width of the screen
+<C-w><J|K|H|L> - to move the current cursor's window to the very bottom|top|left|right of the screen using the full height|width of the screen
