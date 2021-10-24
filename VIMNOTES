@@ -15,6 +15,29 @@ insert mode (i) - mode for inserting text
 commandline/line modes(:,?,/,!) - normally entered when in normal mode that enables to enter cmd like saving, searching, locating, switching options related to vim etc
 
 ----------------------------------------------------------------------------
+KEYSTROKE CONVENTIONS IN VIM
+----------------------------------------------------------------------------
+
+<BS> - Backspace
+<CR>|<Enter>|<Return> - Enter
+<Esc> - Escape
+<Space> - Space
+<Up> - Up arrow
+<Down> - Down arrow
+<Left> - Left arrow
+<Right> - Right arrow
+<Insert> - Insert
+<Del> - Delete
+<Home> - Home
+<End> - End
+<PageUp> - Page-Up
+<PageDown> - Page-Down
+<Tab> - Tab
+<bar> - '|'
+<C-X> - Ctrl-X
+<F1> - <F12> - Function keys
+
+----------------------------------------------------------------------------
 NAVIGATION CMDS IN VIM
 ----------------------------------------------------------------------------
 
@@ -22,6 +45,12 @@ j - move down
 k - move up
 l - move right
 h - move left
+
+m<character> - mark current cursor's position with a character (used when we want to return to some position quickly after we traverse through a file elsewhere)
+`<character> - move cursor to marked position (grave accent)
+'<character> - move cursor to beginning of marked position's line (single quote)
+`` - return to previous mark|context (grave accents)
+'' - return to beginning of line containing previous mark (single quotes)
 
 w - move to next word's start position (considers punctuation as a word and whitespace)
 e - move to next word's end position (considers punctuation as a word and whitespace)
@@ -35,7 +64,7 @@ gE - move to previous word's end position (doesn't consider punctuation as a w_o
 0 - jump to the beginning of the line
 $ - jump to the end of the line
 ^ - jump to very first character(not a whitespace) in the line
-+ - jump to very first nonblank character of next line
++|<CR> - jump to very first nonblank character of next line
 - - jump to very first nonblank character of previous line
 
 gg - jumps to first line in the file
@@ -44,7 +73,6 @@ G - jumps to last line in the file
 :<line_number> - jump to given line_number in the file
 :$ - jump to the end of the file
 
-(NOTE: <C-any_alphabet> means [CTRL] + any_alphabet, <CR> means [ENTER])
 <C-f> - Page Down
 <C-b> - Page Up
 <C-e> - Show one more line at the bottom
@@ -52,7 +80,7 @@ G - jumps to last line in the file
 <C-o> - Move Cursor to previous position, i.e. from where the cursor is jumped from
 <C-i> - Move Cursor to lastly changed position, i.e. to the very last position where cursor was placed
 <C-]> - Move Cursor to the highlighted text's definition below cursor(this only works within vim's :help <command> context or help.txt file of vim. Alternatively for programming, to view function definition we can use this and even 'gd' cmd). For more view HELP SYSTEM IN VIM Section
-z<CR> - moves the current cursor's position up on the screen
+z{<CR>|.|-} - moves the line with cursor to top|middle|bottom of the screen
 
     |--------(following block to be replaced elsewhere later due to not being navigation cmds)----------------------
     |  <C-g> - displays file's name, metadata, status, current & total line, cursor's position in the current file, how far we're down a file(in %), column number where cursor is at
@@ -62,6 +90,7 @@ z<CR> - moves the current cursor's position up on the screen
     |  << - deindent text
     |  . - repeats previous command
     |  u - undo previous change
+    |  U - restore current cursor's line change
     |  <C-r> - redo previous change
     |  
     |  :e <path|file_name>- creates a new file in relative path by default
@@ -436,26 +465,6 @@ NOTE: the following .vimrc|_vimrc mockup contains description about some command
 | 
 | "to change the <leader> key:
 | "let mapleader="<ANY_KEY>"
-| 
-| "All other keystroke maps:
-| "<BS> - Backspace
-| "<CR> | <Enter> | <Return> - Enter
-| "<Esc> - Escape
-| "<Space> - Space
-| "<Up> - Up arrow
-| "<Down> - Down arrow
-| "<Left> - Left arrow
-| "<Right> - Right arrow
-| "<Insert> - Insert
-| "<Del> - Delete
-| "<Home> - Home
-| "<End> - End
-| "<PageUp> - Page-Up
-| "<PageDown> - Page-Down
-| "<Tab> - Tab
-| "<bar> - '|'
-| "<C-X> - Ctrl-X
-| "<F1> - <F12> - Function keys
 | 
 | "NOTE: vmap - maps for visual mode only
 | "nmap - maps for normal mode only
