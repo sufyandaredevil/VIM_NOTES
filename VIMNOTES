@@ -13,94 +13,106 @@
 ---
 
 ## KEYSTROKE CONVENTIONS
-- **\<BS>** - <kbd>Backspace</kbd> 
-- **\<CR>** | **\<Enter>** | **\<Return>** - <kbd>Enter</kbd> 
-- **\<Esc>** - <kbd>Escape</kbd> 
-- **\<Space>** - <kbd>Space</kbd> 
-- **\<Up>** - <kbd>↑</kbd> 
-- **\<Down>** - <kbd>↓</kbd> 
-- **\<Left>** - <kbd>←</kbd> 
-- **\<Right>** - <kbd>→</kbd> 
-- **\<Insert>** - <kbd>Ins</kbd> 
-- **\<Del>** - <kbd>Del</kbd> 
-- **\<Home>** - <kbd>Home</kbd> 
-- **\<End>** - <kbd>End</kbd> 
-- **\<PageUp>** - <kbd>PgUp</kbd> 
-- **\<PageDown>** - <kbd>PgDwn</kbd> 
-- **\<Tab>** - <kbd>Tab</kbd> 
-- **\<bar>** - <kbd>|</kbd> 
-- **\<C-X>** - <kbd>Ctrl</kbd>+<kbd>X</kbd> (instead of X, convention can be used for any letters in the keyboard)
-- **\<F1>** - **\<F12>** - <kbd>F1</kbd> to <kbd>F12</kbd> 
+- **\<BS>** - <kbd>Backspace</kbd>
+- **\<CR>** | **\<Enter>** | **\<Return>** - <kbd>Enter</kbd>
+- **\<Esc>** - <kbd>Escape</kbd>
+- **\<Space>** - <kbd>Space</kbd>
+- **\<Up>** - <kbd>↑</kbd>
+- **\<Down>** - <kbd>↓</kbd>
+- **\<Left>** - <kbd>←</kbd>
+- **\<Right>** - <kbd>→</kbd>
+- **\<Insert>** - <kbd>Ins</kbd>
+- **\<Del>** - <kbd>Del</kbd>
+- **\<Home>** - <kbd>Home</kbd>
+- **\<End>** - <kbd>End</kbd>
+- **\<PageUp>** - <kbd>PgUp</kbd>
+- **\<PageDown>** - <kbd>PgDwn</kbd>
+- **\<Tab>** - <kbd>Tab</kbd>
+- **\<bar>** - <kbd>|</kbd>
+- **\<C-X>** - <kbd>Ctrl</kbd>+<kbd>X</kbd> (instead of X, convention can be used for any letters in the keyboard
+- **\<F1>** - **\<F12>** - <kbd>F1</kbd> to <kbd>F12</kbd>
 
 ---
 
 ## NAVIGATION / MOTION CMDS
 ### BASIC MOVES:
-- > **<kbd>k</kbd>** - move up  
-  > **<kbd>j</kbd>** - move down  
-  > **<kbd>h</kbd>** - move left  
-  > **<kbd>l</kbd>** - move right  
+  > - **<kbd>k</kbd>** - move up
+  > - **<kbd>j</kbd>** - move down
+  > - **<kbd>h</kbd>** - move left
+  > - **<kbd>l</kbd>** - move right
 
 ### WORD WISE MOVES:
-- > **<kbd>w</kbd>** - move to next word's start position (considers punctuation as a word and whitespace)  
-  > **<kbd>e</kbd>** - move to next word's end position (considers punctuation as a word and whitespace)  
-  > **<kbd>b</kbd>** - move to previous word's start position (considers punctuation as a word and whitespace)  
-  > **<kbd>ge</kbd>** - move to previous word's end position (considers punctuation as a word and whitespace)  
-  > **<kbd>W</kbd>** - move to next word (doesn't consider punctuation as a word) considering whitespace  
-  > **<kbd>E</kbd>** - move to next word's end position (doesn't consider punctuation as a word)  
-  > **<kbd>B</kbd>** - move to previous word's start position (doesn't consider punctuation as a word) considering whitespace  
-  > **<kbd>gE</kbd>** - move to previous word's end position (doesn't consider punctuation as a word) considering whitespace  
+  > - **<kbd>w</kbd>** - move to next word's start position (considers punctuation as a word and whitespace)
+  > - **<kbd>e</kbd>** - move to next word's end position (considers punctuation as a word and whitespace)
+  > - **<kbd>b</kbd>** - move to previous word's start position (considers punctuation as a word and whitespace)
+  > - **<kbd>ge</kbd>** - move to previous word's end position (considers punctuation as a word and whitespace)
+  > - **<kbd>W</kbd>** - move to next word (doesn't consider punctuation as a word) considering whitespace
+  > - **<kbd>E</kbd>** - move to next word's end position (doesn't consider punctuation as a word)
+  > - **<kbd>B</kbd>** - move to previous word's start position (doesn't consider punctuation as a word) considering whitespace
+  > - **<kbd>gE</kbd>** - move to previous word's end position (doesn't consider punctuation as a word) considering whitespace
 
 ### HORIZONTAL MOVES:
-- > **<kbd>0</kbd>** - jump to the beginning of the line  
-  > **<kbd>$</kbd>** - jump to the end of the line  
-  > **<kbd>^</kbd>** - jump to very first character(not a whitespace) in the line  
+  > - **<kbd>0</kbd>** - jump to the beginning of the line
+  > - **<kbd>$</kbd>** - jump to the end of the line
+  > - **<kbd>^</kbd>** - jump to very first character(not a whitespace) in the line
 
 ### VERTICAL MOVES:
-- > **<kbd>+</kbd>** | **`<CR>`** - jump to very first nonblank character of next line  
-  > **<kbd>\-</kbd>** - jump to very first nonblank character of previous line  
-  > **<kbd>gg</kbd>** - jumps to first line in the file  
-  > **<kbd>G</kbd>** - jumps to last line in the file  
-  > **<kbd>:</kbd>`<line_number>`** - jump to given line_number in the file  
-  > **<kbd>:$</kbd>** - jump to the end of the file  
+  > - **<kbd>+</kbd>** | **`<CR>`** - jump to very first nonblank character of next line
+  > - **<kbd>\-</kbd>** - jump to very first nonblank character of previous line
+  > - **<kbd>gg</kbd>** - jumps to first line in the file
+  > - **<kbd>G</kbd>** - jumps to last line in the file
+  > - **<kbd>:</kbd>`<line_number>`** - jump to given line_number in the file
+  > - **<kbd>:$</kbd>** - jump to the end of the file
 
 ### MARKED MOVES:
-- > **<kbd>m</kbd>`<character>`** - mark current cursor's position with a character (used when we want to return to some position quickly after we traverse through a file elsewhere)  
-  > **<kbd>\`</kbd>`<character>`** - move cursor to marked position (grave accent)  
-  > **<kbd>'</kbd><character>** - move cursor to beginning of marked position's line (single quote)  
-  > **<kbd>\`</kbd><kbd>\`</kbd>** - return to previous mark|context (grave accents)  
-  > **<kbd>'</kbd><kbd>'</kbd>** - return to beginning of line containing previous mark (single quotes)  
+  > - **<kbd>m</kbd>`<character>`** - mark current cursor's position with a character (used when we want to return to some position quickly after we traverse through a file elsewhere)
+  > - **<kbd>\`</kbd>`<character>`** - move cursor to marked position (grave accent)
+  > - **<kbd>'</kbd><character>** - move cursor to beginning of marked position's line (single quote)
+  > - **<kbd>\`</kbd><kbd>\`</kbd>** - return to previous mark | context (grave accents)
+  > - **<kbd>'</kbd><kbd>'</kbd>** - return to beginning of line containing previous mark (single quotes)
 
 ### SCROLL MOVES:
-- > **`<C-f>`** - page down  
-  > **`<C-b>`** - page up  
-  > **`<C-e>`** - show one more line at the bottom  
-  > **`<C-y>`** - show one more line at the top  
-  > **`<C-o>`** - move cursor to previous position, i.e. from where the cursor is jumped from  
-  > **`<C-i>`** - move cursor to lastly changed position, i.e. to the very last position where cursor was placed  
-  > **`<C-]>`** - move cursor to the highlighted text's definition below cursor  
-  > **<kbd>z</kbd>`<CR>`** - scroll with cursor to top of the screen  
-  > **<kbd>z</kbd><kbd>.</kbd>** - scroll with cursor to middle of the screen  
-  > **<kbd>z</kbd><kbd>-</kbd>** - scroll with cursor to bottom of the screen  
-  > **<kbd>H</kbd>** - move cursor to the top of the screen  
-  > **<kbd>M</kbd>** - move cursor to the middle of the screen  
-  > **<kbd>L</kbd>** - move cursor to the bottom of the screen  
+  > - **`<C-f>`** - page down
+  > - **`<C-b>`** - page up
+  > - **`<C-e>`** - show one more line at the bottom
+  > - **`<C-y>`** - show one more line at the top
+  > - **`<C-o>`** - move cursor to previous position, i.e. from where the cursor is jumped from
+  > - **`<C-i>`** - move cursor to lastly changed position, i.e. to the very last position where cursor was placed
+  > - **`<C-]>`** - move cursor to the highlighted text's definition below cursor
+  > - **<kbd>z</kbd>`<CR>`** - scroll to top of the screen where the cursor is located
+  > - **<kbd>z</kbd><kbd>.</kbd>** - scroll to middle of the screen where the cursor is located
+  > - **<kbd>z</kbd><kbd>-</kbd>** - scroll to bottom of the screen where the cursor is located
+  > - **<kbd>H</kbd>** - move cursor to the top of the screen
+  > - **<kbd>M</kbd>** - move cursor to the middle of the screen
+  > - **<kbd>L</kbd>** - move cursor to the bottom of the screen
 
 ---
 
-## TEXT MANIPULATION CMDS
-- > **<kbd>x</kbd>** - delete letter present below the cursor  
-  > **<kbd>X</kbd>** - delete letter present before the cursor  
-  > **<kbd>D</kbd>** - deletes texts from current cursor's position to end of the line  
-  > **<kbd>d</kbd>`<motion_cmd>`** - delete texts from current cursor's position upto given `<motion_cmd>`  
-  >  - **<ins>Ex: </ins><kbd>d</kbd><kbd>w</kbd>** - deletes a word from the cursor's current position  
-  >
-  > **`<count>`<kbd>dd</kbd>`<motion_cmd>`** - delete current line and contents where cursor is <count> times upto given motion  
-  >  - **<ins>Ex: </ins><kbd>5</kbd><kbd>d</kbd><kbd>w</kbd>** - delete 5 words  
-  >
-  > **<ins>NOTE:</ins>**
-    > The above 2 cmds generally means: `[count]` `{operation}` `{motion}`  
-    > Also: `[count]` `{operation}` `[count]` `{motion}` combo can be performed
+## TEXT MANIPULATION / OPERATION CMDS
+  > - **<kbd>x</kbd>** - delete letter present below the cursor
+  > - **<kbd>X</kbd>** - delete letter present before the cursor
+  > - **<kbd>D</kbd>** - deletes texts from current cursor's position to end of the line
+  > - **<kbd>d</kbd>`<motion_cmd>`** - delete texts from current cursor's position upto given **`<motion_cmd>`**
+  >    - **<ins>Example:</ins> <kbd>d</kbd><kbd>w</kbd>** - deletes a word from the cursor's current position
+  > - **`<count>` `<operation>` `<motion_cmd>`** - delete current line and contents where cursor is <count> times upto given motion
+  >   - **<ins>Example:</ins> <kbd>5</kbd><kbd>d</kbd><kbd>w</kbd>** - delete 5 words
+
+  **<ins>NOTE:</ins>**
+  - `[count]` `{operation}` `[count]` `{motion}` combo can also be performed
+
+---
+
+## CUT COPY PASTE (DELETE,YANK,PUT)
+  > - **<kbd>D</kbd>** - cut text from cursor till end and place in the UNNAMED/DEFAULT register
+  > - **<kbd>dd</kbd>** - cut line and place in the UNNAMED/DEFAULT register
+  > - **<kbd>x</kbd>** - cut text and place in the UNNAMED/DEFAULT register
+  > - **<kbd>P</kbd>** - put text before the cursor
+  > - **<kbd>p</kbd>** - put text after the cursor
+  > - **<kbd>y</kbd>`{motion}`** - yank text wrt given motion
+  > - **<kbd>yy</kbd>** - yanks whole line's content present below cursor
+
+  **<ins>NOTE:</ins>**
+  - Above commands actually don't delete text, i.e they clear text and save into a register (register is a clipboard-like storage location for vim)
 
 ---
 
@@ -134,21 +146,6 @@ Also when typing :h | :help <cmd>, when we wanna see all different combinations 
 
 Help system is also useful to know alternatives for a known command
 Eg: :f can be used instead of using <C-g> which can be found from the help.txt documentation after we searching using :h ^g
-
-----------------------------------------------------------------------------
-CUT COPY PASTE (DELETE,YANK,PUT) IN VIM
-----------------------------------------------------------------------------
-
-NOTE: we've seen cmds like d,D,x in TEXT DELETION CMDS, but both actually cut text and not just delete it
-where cut = delete and save into a register (register is a clipboard-like storage location for vim)
-
-D - cut text from cursor till end and place in the UNNAMED/DEFAULT register
-dd - cut line and place in the UNNAMED/DEFAULT register
-x - cut text and place in the UNNAMED/DEFAULT register
-P - put text before the cursor
-p - put text after the cursor
-y{motion} - yank text wrt given motion
-yy - yanks whole line's content present below cursor
 
 ----------------------------------------------------------------------------
 REGISTERS IN VIM
