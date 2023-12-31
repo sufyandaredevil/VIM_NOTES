@@ -1,138 +1,110 @@
-----------------------------------------------------------------------------
-INTRODUCTION TO VIM
-----------------------------------------------------------------------------
+# VIM NOTES
 
-VIM - Vi IMproved where Vi means 'Visual'
-the cmd vi has been replaced by vim but still both could be used
-Vim is available in a TUI(Textbased user interface) and a GUI 
+## MODES IN VIM
+- **`Normal` / `Command mode` (<kbd>Esc</kbd> or `<C-[>` which means <kbd>Ctrl</kbd>+<kbd>[</kbd> in vim's language)**:
+  - Vim starts in this mode, used for entering commands
+- **`Insert mode` (<kbd>i</kbd>)**:
+  - Mode to insert text
+- **`Visual mode` (<kbd>v</kbd>)**:
+  - Mode to select text
+- **`Line` / `Command Line` / `Ex mode` (<kbd>:</kbd>, <kbd>?</kbd>, <kbd>/</kbd>, <kbd>!</kbd>)**:
+  - Entered when being in Normal mode enabling to enter cmds like saving, searching, locating, switching and more options related to vim
 
-----------------------------------------------------------------------------
-MODES IN VIM
-----------------------------------------------------------------------------
+---
 
-normal/command mode (Esc|<C-[>) - normally vim starts in this mode (usually used for entering commands)
-insert mode (i) - mode for inserting text
-line/commandline/ex mode(:,?,/,!) - normally entered when in normal mode that enables to enter cmd like saving, searching, locating, switching options related to vim etc
+## KEYSTROKE CONVENTIONS
+- **\<BS>** - <kbd>Backspace</kbd> 
+- **\<CR>** | **\<Enter>** | **\<Return>** - <kbd>Enter</kbd> 
+- **\<Esc>** - <kbd>Escape</kbd> 
+- **\<Space>** - <kbd>Space</kbd> 
+- **\<Up>** - <kbd>↑</kbd> 
+- **\<Down>** - <kbd>↓</kbd> 
+- **\<Left>** - <kbd>←</kbd> 
+- **\<Right>** - <kbd>→</kbd> 
+- **\<Insert>** - <kbd>Ins</kbd> 
+- **\<Del>** - <kbd>Del</kbd> 
+- **\<Home>** - <kbd>Home</kbd> 
+- **\<End>** - <kbd>End</kbd> 
+- **\<PageUp>** - <kbd>PgUp</kbd> 
+- **\<PageDown>** - <kbd>PgDwn</kbd> 
+- **\<Tab>** - <kbd>Tab</kbd> 
+- **\<bar>** - <kbd>|</kbd> 
+- **\<C-X>** - <kbd>Ctrl</kbd>+<kbd>X</kbd> (instead of X, convention can be used for any letters in the keyboard)
+- **\<F1>** - **\<F12>** - <kbd>F1</kbd> to <kbd>F12</kbd> 
 
-----------------------------------------------------------------------------
-KEYSTROKE CONVENTIONS IN VIM
-----------------------------------------------------------------------------
+---
 
-<BS> - Backspace
-<CR>|<Enter>|<Return> - Enter
-<Esc> - Escape
-<Space> - Space
-<Up> - Up arrow
-<Down> - Down arrow
-<Left> - Left arrow
-<Right> - Right arrow
-<Insert> - Insert
-<Del> - Delete
-<Home> - Home
-<End> - End
-<PageUp> - Page-Up
-<PageDown> - Page-Down
-<Tab> - Tab
-<bar> - '|'
-<C-X> - Ctrl-X
-<F1> - <F12> - Function keys
+## NAVIGATION / MOTION CMDS
+### BASIC MOVES:
+- > **<kbd>k</kbd>** - move up  
+  > **<kbd>j</kbd>** - move down  
+  > **<kbd>h</kbd>** - move left  
+  > **<kbd>l</kbd>** - move right  
 
-----------------------------------------------------------------------------
-NAVIGATION CMDS IN VIM
-----------------------------------------------------------------------------
+### WORD WISE MOVES:
+- > **<kbd>w</kbd>** - move to next word's start position (considers punctuation as a word and whitespace)  
+  > **<kbd>e</kbd>** - move to next word's end position (considers punctuation as a word and whitespace)  
+  > **<kbd>b</kbd>** - move to previous word's start position (considers punctuation as a word and whitespace)  
+  > **<kbd>ge</kbd>** - move to previous word's end position (considers punctuation as a word and whitespace)  
+  > **<kbd>W</kbd>** - move to next word (doesn't consider punctuation as a word) considering whitespace  
+  > **<kbd>E</kbd>** - move to next word's end position (doesn't consider punctuation as a word)  
+  > **<kbd>B</kbd>** - move to previous word's start position (doesn't consider punctuation as a word) considering whitespace  
+  > **<kbd>gE</kbd>** - move to previous word's end position (doesn't consider punctuation as a word) considering whitespace  
 
-j - move down
-k - move up
-l - move right
-h - move left
+### HORIZONTAL MOVES:
+- > **<kbd>0</kbd>** - jump to the beginning of the line  
+  > **<kbd>$</kbd>** - jump to the end of the line  
+  > **<kbd>^</kbd>** - jump to very first character(not a whitespace) in the line  
 
-m<character> - mark current cursor's position with a character (used when we want to return to some position quickly after we traverse through a file elsewhere)
-`<character> - move cursor to marked position (grave accent)
-'<character> - move cursor to beginning of marked position's line (single quote)
-`` - return to previous mark|context (grave accents)
-'' - return to beginning of line containing previous mark (single quotes)
+### VERTICAL MOVES:
+- > **<kbd>+</kbd>** | **`<CR>`** - jump to very first nonblank character of next line  
+  > **<kbd>\-</kbd>** - jump to very first nonblank character of previous line  
+  > **<kbd>gg</kbd>** - jumps to first line in the file  
+  > **<kbd>G</kbd>** - jumps to last line in the file  
+  > **<kbd>:</kbd>`<line_number>`** - jump to given line_number in the file  
+  > **<kbd>:$</kbd>** - jump to the end of the file  
 
-w - move to next word's start position (considers punctuation as a word and whitespace)
-e - move to next word's end position (considers punctuation as a word and whitespace)
-b - move to previous word's start position (considers punctuation as a word and whitespace)
-ge - move to previous word's end position (considers punctuation as a word and whitespace)
-W - move to next word (doesn't consider punctuation as a word) considering whitespace
-E - move to next word's end position (doesn't consider punctuation as a word)
-B - move to previous word's start position (doesn't consider punctuation as a word) considering whitespace
-gE - move to previous word's end position (doesn't consider punctuation as a w_ord) considering whitespace
+### MARKED MOVES:
+- > **<kbd>m</kbd>`<character>`** - mark current cursor's position with a character (used when we want to return to some position quickly after we traverse through a file elsewhere)  
+  > **<kbd>\`</kbd>`<character>`** - move cursor to marked position (grave accent)  
+  > **<kbd>'</kbd><character>** - move cursor to beginning of marked position's line (single quote)  
+  > **<kbd>\`</kbd><kbd>\`</kbd>** - return to previous mark|context (grave accents)  
+  > **<kbd>'</kbd><kbd>'</kbd>** - return to beginning of line containing previous mark (single quotes)  
 
-0 - jump to the beginning of the line
-$ - jump to the end of the line
-^ - jump to very first character(not a whitespace) in the line
-+|<CR> - jump to very first nonblank character of next line
-- - jump to very first nonblank character of previous line
+### SCROLL MOVES:
+- > **`<C-f>`** - page down  
+  > **`<C-b>`** - page up  
+  > **`<C-e>`** - show one more line at the bottom  
+  > **`<C-y>`** - show one more line at the top  
+  > **`<C-o>`** - move cursor to previous position, i.e. from where the cursor is jumped from  
+  > **`<C-i>`** - move cursor to lastly changed position, i.e. to the very last position where cursor was placed  
+  > **`<C-]>`** - move cursor to the highlighted text's definition below cursor  
+  > **<kbd>z</kbd>`<CR>`** - scroll with cursor to top of the screen  
+  > **<kbd>z</kbd><kbd>.</kbd>** - scroll with cursor to middle of the screen  
+  > **<kbd>z</kbd><kbd>-</kbd>** - scroll with cursor to bottom of the screen  
+  > **<kbd>H</kbd>** - move cursor to the top of the screen  
+  > **<kbd>M</kbd>** - move cursor to the middle of the screen  
+  > **<kbd>L</kbd>** - move cursor to the bottom of the screen  
 
-gg - jumps to first line in the file
-G - jumps to last line in the file
+---
 
-:<line_number> - jump to given line_number in the file
-:$ - jump to the end of the file
+## TEXT MANIPULATION CMDS
+- > **<kbd>x</kbd>** - delete letter present below the cursor  
+  > **<kbd>X</kbd>** - delete letter present before the cursor  
+  > **<kbd>D</kbd>** - deletes texts from current cursor's position to end of the line  
+  > **<kbd>d</kbd>`<motion_cmd>`** - delete texts from current cursor's position upto given `<motion_cmd>`  
+  >  - **<ins>Ex: </ins><kbd>d</kbd><kbd>w</kbd>** - deletes a word from the cursor's current position  
+  >
+  > **`<count>`<kbd>dd</kbd>`<motion_cmd>`** - delete current line and contents where cursor is <count> times upto given motion  
+  >  - **<ins>Ex: </ins><kbd>5</kbd><kbd>d</kbd><kbd>w</kbd>** - delete 5 words  
+  >
+  > **<ins>NOTE:</ins>**
+    > The above 2 cmds generally means: `[count]` `{operation}` `{motion}`  
+    > Also: `[count]` `{operation}` `[count]` `{motion}` combo can be performed
 
-<C-f> - page down
-<C-b> - page up
-<C-e> - show one more line at the bottom
-<C-y> - show one more line at the top
-<C-o> - move cursor to previous position, i.e. from where the cursor is jumped from
-<C-i> - move cursor to lastly changed position, i.e. to the very last position where cursor was placed
-<C-]> - move cursor to the highlighted text's definition below cursor(this only works within vim's :help <command> context or help.txt file of vim. Alternatively for programming, to view function definition we can use this and even 'gd' cmd). For more view HELP SYSTEM IN VIM Section
-z{<CR>|.|-} - moves the line with cursor to top|middle|bottom of the screen
-H|M|L - move cursor only to the top|middle|bottom of the screen
+---
 
-    |--------(following block to be replaced elsewhere later due to not being navigation cmds)----------------------
-    |  <C-g> - displays file's name, metadata, status, current & total line, cursor's position in the current file, how far we're down a file(in %), column number where cursor is at
-    |  g<C-g> - displays even more metadata that the above cmd
-    |  
-    |  >> - indent text
-    |  << - deindent text
-    |  . - repeats previous command
-    |  u - undo previous change
-    |  U - restore current cursor's line change
-    |  <C-r> - redo previous change
-    |  
-    |  :e <path|file_name>- creates a new file in relative path by default
-    |  :w - saves the current file
-    |  :wq - write and quit
-    |  :q - quit if no changes are done and if changed, warning is shown
-    |  :q! - quit without write
-    |  NOTE: the symbol ! when used in command/line mode(:) generally means to force an action, toggle setting, execute external cmd etc
-    |  
-    |  i - goto insert mode(i.e. before the cursor)
-    |  I - goto 0th position in current cursor's line and goto insert mode
-    |  a - goto insert mode(i.e. after the cursor)
-    |  A - goto $th position in current cursor's line and goto insert mode
-    |  O - Insert new line below the cursor and enter insert mode
-    |  o - Insert new line above the cursor and enter insert mode
-    |  
-    |  for repetition of text insertion:
-    |  [count] [above_cmds] <your_text_here> <Esc>
-    |  Eg: 5i*<Esc> - places '*' 5 times horizontally
-    |  Eg: 5o*<Esc> - places '*' 5 times vertically
-    |  
-    |---------------------------------------------------------------------------------------------------------------
-
-----------------------------------------------------------------------------
-TEXT DELETION CMDS IN VIM
-----------------------------------------------------------------------------
-
-NOTE: foll. commands basically cuts and saves deleted content to register. For more see --> CUT COPY PASTE (DELETE,YANK,PUT) IN VIM Section
-
-x - delete letter present below the cursor
-X - delete letter present before the cursor
-D - deletes texts from current cursor's position to end of the line
-d<motion_cmd> - delete texts from current cursor's position upto given <motion_cmd>
-Eg: dw - deletes a word from the cursor's current position
-<count>dd<motion_cmd> - delete current line and contents where cursor is <count> times upto given motion
-Eg: 5dw - delete 5 words
-NOTE: the above 2 cmds generally means: [count]operation{motion}. Also --> [count]operation[count]{motion} is possible
-
-----------------------------------------------------------------------------
-HELP SYSTEM IN VIM
-----------------------------------------------------------------------------
+## HELP SYSTEM IN VIM
 
 :help - opens the vim's help.txt(in readonly mode) which is a text file, where if we press <C-g> we can see the location of where the file help.txt is located
 :help <command> - shows info about the <command> given from the help.txt file
@@ -585,3 +557,36 @@ Moving window commands:
 <C-w>r - rearrange windows by rotating clockwise
 <C-w>R - rearrange windows by rotating anti-clockwise
 <C-w><J|K|H|L> - to move the current cursor's window to the very bottom|top|left|right of the screen using the full height|width of the screen
+
+### REMAINING:
+    |--------(following block to be replaced elsewhere later due to not being navigation cmds)----------------------
+    |  <C-g> - displays file's name, metadata, status, current & total line, cursor's position in the current file, how far we're down a file(in %), column number where cursor is at
+    |  g<C-g> - displays even more metadata that the above cmd
+    |  
+    |  >> - indent text
+    |  << - deindent text
+    |  . - repeats previous command
+    |  u - undo previous change
+    |  U - restore current cursor's line change
+    |  <C-r> - redo previous change
+    |  
+    |  :e <path|file_name>- creates a new file in relative path by default
+    |  :w - saves the current file
+    |  :wq - write and quit
+    |  :q - quit if no changes are done and if changed, warning is shown
+    |  :q! - quit without write
+    |  NOTE: the symbol ! when used in command/line mode(:) generally means to force an action, toggle setting, execute external cmd etc
+    |  
+    |  i - goto insert mode(i.e. before the cursor)
+    |  I - goto 0th position in current cursor's line and goto insert mode
+    |  a - goto insert mode(i.e. after the cursor)
+    |  A - goto $th position in current cursor's line and goto insert mode
+    |  O - Insert new line below the cursor and enter insert mode
+    |  o - Insert new line above the cursor and enter insert mode
+    |  
+    |  for repetition of text insertion:
+    |  [count] [above_cmds] <your_text_here> <Esc>
+    |  Eg: 5i*<Esc> - places '*' 5 times horizontally
+    |  Eg: 5o*<Esc> - places '*' 5 times vertically
+    |  
+    |---------------------------------------------------------------------------------------------------------------
